@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SensorsProject</string>
+    <string-array name="breads">
+        <item>Choose your bread type</item>
+        <item>Sourdough</item>
+        <item>Rye Dough</item>
+        <item>Sweet Dough / Croissant</item>
+        <item>Pre-ferments</item>
+        <item>Other</item>
+    </string-array>
 </resources>

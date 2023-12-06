@@ -7,6 +7,9 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 
 
@@ -15,16 +18,18 @@ class MainActivity : AppCompatActivity() {
     lateinit var sensorEventListener: SensorEventListener
     lateinit var TempSensorEventListener: SensorEventListener
     lateinit var sensorManager : SensorManager
+    lateinit var spinner: Spinner
     var humiditySensor: Sensor? = null
     var temperatureSensor: Sensor? = null
     private var resume = false;
+    private lateinit var breadPick : String
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val spinner: Spinner = findViewById(R.id.typeSpinner)
         sensorManager = getSystemService(SensorManager::class.java)
 
         humiditySensor = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY)
@@ -45,6 +50,25 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+            }
+        }
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.breads,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears.
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner.
+            spinner.adapter = adapter
+        }
+        spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                parent?.run{
+                    breadPick = getItemAtPosition(position).toString()
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
     }
