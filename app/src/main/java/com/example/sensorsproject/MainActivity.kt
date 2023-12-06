@@ -18,15 +18,15 @@ import android.widget.TextView
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var sensorEventListener: SensorEventListener
-    lateinit var TempSensorEventListener: SensorEventListener
-    lateinit var sensorManager: SensorManager
-    var humiditySensor: Sensor? = null
-    var temperatureSensor: Sensor? = null
+    private lateinit var sensorEventListener: SensorEventListener
+    private lateinit var TempSensorEventListener: SensorEventListener
+    private lateinit var sensorManager: SensorManager
+    private var humiditySensor: Sensor? = null
+    private var temperatureSensor: Sensor? = null
     private lateinit var breadPick: String
-    val humList: List<Int> = arrayListOf(60, 80)
-    var optimalTempL: Int = 0
-    var optimalTempM: Int = 0
+    private val humList: List<Int> = arrayListOf(60, 80)
+    private var optimalTempL: Int = 0
+    private var optimalTempM: Int = 0
     var tempVal: Double = 0.0
     var humVal: Float = 0.0F
     lateinit var resultText: TextView
