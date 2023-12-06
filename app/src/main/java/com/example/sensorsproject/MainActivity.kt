@@ -1,5 +1,6 @@
 package com.example.sensorsproject
 
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -156,7 +157,36 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun result(tempList: List<Int>, tempVal: Double, humVal: Float){
-        if(humList[0]<humVal && humVal<humList[1]) resultText.text = "result: Amazing"
+        var humResult = 0
+        var tempResult = 0
+        if (breadPick == "Choose your bread type"){
+            resultText.text = "Please choose a bread type"
+            resultText.setTextColor(Color.GRAY)
+            return
+        }
+        if(humList[0]<humVal && humVal<humList[1]) humResult = 1
+        if(tempVal.toInt() in tempList[0]..tempList[1]) tempResult = 1 // in range
+        else if(tempVal.toInt() in tempList[0]-2..tempList[1]+2) tempResult = 2 //slightly outside range
+        if(humResult == 1 && tempResult == 1) {
+            resultText.text = "Result: Ideal"
+            resultText.setTextColor(Color.GREEN)
+        }
+        if(humResult == 1 && tempResult == 2) {
+            resultText.text = "Result: Okay"
+            resultText.setTextColor(Color.BLUE)
+        }
+        if(humResult == 0 && tempResult in 1..2){
+            resultText.text = "Find a Better Humidity"
+            resultText.setTextColor(Color.GRAY)
+        }
+        if(humResult == 1 && tempResult == 0){
+            resultText.text = "Find a Better Temperature"
+            resultText.setTextColor(Color.GRAY)
+        }
+        if(humResult == 0 && tempResult == 0){
+            resultText.text = "Humidity and Temperature both not ideal "
+            resultText.setTextColor(Color.RED)
+        }
+        }
 
     }
-}
