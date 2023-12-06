@@ -13,8 +13,10 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
     lateinit var sensorEventListener: SensorEventListener
+    lateinit var TempSensorEventListener: SensorEventListener
     lateinit var sensorManager : SensorManager
     var humiditySensor: Sensor? = null
+    var temperatureSensor: Sensor? = null
     private var resume = false;
 
 
@@ -26,10 +28,20 @@ class MainActivity : AppCompatActivity() {
         sensorManager = getSystemService(SensorManager::class.java)
 
         humiditySensor = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY)
+        temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
 
-        sensorEventListener = object: SensorEventListener{
+        sensorEventListener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
                 findViewById<TextView>(R.id.hum_value).text = event!!.values[0].toString()
+            }
+
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+            }
+
+        }
+        TempSensorEventListener = object : SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent?) {
+                findViewById<TextView>(R.id.temp_value).text = event!!.values[0].toString()
             }
 
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -40,18 +52,14 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         sensorManager.registerListener(sensorEventListener, humiditySensor, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(TempSensorEventListener, temperatureSensor, SensorManager.SENSOR_DELAY_NORMAL)
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(sensorEventListener)
+        sensorManager.unregisterListener(TempSensorEventListener)
     }
 
-    fun resumeReading(view: View) {
-        this.resume = true
-    }
 
-    fun pauseReading(view: View) {
-        this.resume = false
-    }
 }
