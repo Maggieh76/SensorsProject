@@ -6,6 +6,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         sensorEventListener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
                 findViewById<TextView>(R.id.hum_value).text = event!!.values[0].toString()
+
             }
 
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -46,7 +48,8 @@ class MainActivity : AppCompatActivity() {
         }
         TempSensorEventListener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
-                findViewById<TextView>(R.id.temp_value).text = event!!.values[0].toString()
+                var tempVal = (event!!.values[0] * 1.8) + 32
+                findViewById<TextView>(R.id.temp_value).text = tempVal.toString()
             }
 
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -66,11 +69,13 @@ class MainActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 parent?.run{
                     breadPick = getItemAtPosition(position).toString()
+                    handlePick(breadPick)
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+
     }
 
     override fun onResume() {
@@ -84,6 +89,14 @@ class MainActivity : AppCompatActivity() {
         sensorManager.unregisterListener(sensorEventListener)
         sensorManager.unregisterListener(TempSensorEventListener)
     }
-
+    fun handlePick(breadPick: String){
+        when(breadPick){
+            "Sourdough" -> Log.d("Type", "Sourdough")
+            "Rye Dough" -> Log.d("Type", "Rye Dough")
+            "Sweet Dough / Croissant" -> Log.d("Type", "Sweet Dough / Croissant")
+            "Pre-ferments" -> Log.d("Type", "Pre-ferments")
+            "Other" -> Log.d("Type", "Other")
+            }
+        }
 
 }
