@@ -11,11 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="112dp"
         android:layout_marginBottom="259dp"
         android:text="Current Humidity"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/hum_value"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -25,7 +23,6 @@
         android:layout_marginStart="132dp"
         android:layout_marginEnd="133dp"
         android:layout_marginBottom="292dp"
-        android:onClick="resumeReading"
         android:text="Test"
         app:layout_constraintBottom_toTopOf="@+id/resultText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,11 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="86dp"
         android:layout_marginBottom="29dp"
         android:text="Current Temperature"
         app:layout_constraintBottom_toTopOf="@+id/humText"
-        app:layout_constraintEnd_toStartOf="@+id/temp_value"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
@@ -83,7 +78,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="115dp"
         android:layout_marginBottom="260dp"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -92,24 +86,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="116dp"
-        android:text="Result: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="286dp"
-        android:layout_marginTop="186dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="69dp"
-        android:onClick="pauseReading"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/hum_value"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
