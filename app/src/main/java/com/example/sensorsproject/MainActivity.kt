@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity() {
         TempSensorEventListener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
                 tempVal = (event!!.values[0] * 1.8) + 32
-                var messageT = "$tempVal Fahrenheit"
+                val intTemp = tempVal.toInt()
+                var messageT = "$intTemp Fahrenheit"
                 findViewById<TextView>(R.id.temp_value).text = messageT
             }
 
