@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
             resultText.setTextColor(Color.GRAY)
         }
         if(humResult == 0 && tempResult == 0){
-            resultText.text = "Humidity and Temperature both not ideal "
+            findViewById<TextView>(R.id.textView2).text = "Result: \n Humidity and Temperature both not ideal "
             resultText.setTextColor(Color.RED)
         }
         }
