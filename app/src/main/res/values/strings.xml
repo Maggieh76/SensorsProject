@@ -9,4 +9,5 @@
         <item>Pre-ferments</item>
         <item>Other</item>
     </string-array>
+    <string name="help1">"Correct Temperature Ranges: \n Sourdough   80–85 \n Lean Dough   75–80</string>
 </resources>

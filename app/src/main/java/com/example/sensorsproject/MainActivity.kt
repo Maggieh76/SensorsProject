@@ -1,5 +1,6 @@
 package com.example.sensorsproject
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -8,10 +9,15 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.Spinner
 import android.widget.TextView
 
@@ -32,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var resultText: TextView
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -92,8 +99,35 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-        findViewById<Button>(R.id.testButton).setOnClickListener { result(handlePick(breadPick), tempVal, humVal) }
+        findViewById<Button>(R.id.testButton).setOnClickListener {
+            result(
+                handlePick(breadPick),
+                tempVal,
+                humVal
+            )
+        }
+        findViewById<ImageButton>(R.id.helpButton).setOnClickListener {
+            // inflate the layout of the popup window
+            val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val popupView: View = inflater.inflate(R.layout.popup_window, null)
 
+            // create the popup window
+            val width = LinearLayout.LayoutParams.WRAP_CONTENT
+            val height = LinearLayout.LayoutParams.WRAP_CONTENT
+            val focusable = true // lets taps outside the popup also dismiss it
+            val popupWindow = PopupWindow(popupView, width, height, focusable)
+
+            // show the popup window
+            // which view you pass in doesn't matter, it is only used for the window tolken
+            popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
+
+            // dismiss the popup window when touched
+            popupView.setOnTouchListener { v, event ->
+                popupWindow.dismiss()
+                true
+            }
+
+        }
     }
 
     override fun onResume() {
