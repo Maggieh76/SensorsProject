@@ -48,26 +48,31 @@ class MainActivity : AppCompatActivity() {
         val spinner: Spinner = findViewById(R.id.typeSpinner)
         sensorManager = getSystemService(SensorManager::class.java)
 
-        humiditySensor = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY)
-        temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+        humiditySensor = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY) //set up manager to accept humidity
+        temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) //set up manager to accept temperature
 
-        sensorEventListener = object : SensorEventListener {
+        //Sensor Pipeline: Data Extraction and Preprocessing for Humidity
+        sensorEventListener = object : SensorEventListener { //event listener listens for when the sensor value changes
+            //Sensor Pipeline: preprocessing ->
+            //an event containing all data from the humidity sensor is created every time that the sensor changes
             override fun onSensorChanged(event: SensorEvent?) {
+                //Sensor Pipeline: Data Classification, collecting the needed value from the sensor event, values[0]
                 humVal = event!!.values[0]
-                var messageH = "$humVal%"
+                var messageH = "$humVal%" //refining the sensor data rep to show it is a percentage
                 findViewById<TextView>(R.id.hum_value).text = messageH
-
             }
-
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
             }
-
         }
-        TempSensorEventListener = object : SensorEventListener {
+        //Sensor Pipeline: Data Extraction and Preprocessing for Temperature
+        TempSensorEventListener = object : SensorEventListener { //event listener listens for when the sensor value changes
+            //Sensor Pipeline: preprocessing ->
+            //an event containing all data from the humidity sensor is created every time that the sensor changes
             override fun onSensorChanged(event: SensorEvent?) {
-                tempVal = (event!!.values[0] * 1.8) + 32
+                //Sensor Pipeline: Data Classification, collecting the needed value from the sensor event, values[0]
+                tempVal = (event!!.values[0] * 1.8) + 32 // refining the sensor data to change it from Celsius to Fahrenheit
                 val intTemp = tempVal.toInt()
-                var messageT = "$intTemp Fahrenheit"
+                var messageT = "$intTemp Fahrenheit" //refining the sensor data rep to show it is fahrenheit
                 findViewById<TextView>(R.id.temp_value).text = messageT
             }
 
@@ -103,6 +108,9 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+        /* while the sensor data is collected and displayed on the activity constantly,
+              it is only checked for a "result" when the test button is hit.
+                  this process requires the current sensor data to once again be collected */
         findViewById<Button>(R.id.testButton).setOnClickListener {
             result(
                 handlePick(breadPick),
@@ -133,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
+//Sensor Pipeline: Data extraction set up is registered when resumed
     override fun onResume() {
         super.onResume()
         sensorManager.registerListener(
@@ -147,13 +155,13 @@ class MainActivity : AppCompatActivity() {
             SensorManager.SENSOR_DELAY_NORMAL
         )
     }
-
+    //Sensor Pipeline: Data extraction is unregistered when resumed
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(sensorEventListener)
         sensorManager.unregisterListener(TempSensorEventListener)
     }
-
+//Handle pick returns the optimal range for the currently selected bread type
     fun handlePick(breadPick: String): List<Int> {
         when (breadPick) {
             "Sourdough" -> {
@@ -195,6 +203,10 @@ class MainActivity : AppCompatActivity() {
         return arrayListOf(optimalTempL, optimalTempM)
 
     }
+    //result changes the result box on the app to show how the data lines up
+    //it compares the humidity and temperature collected data to the stored optimal range from handlepick
+    //both sensor data recordings are considered together in order to ensure that both are accounted for in the classification process
+    //the result box message and color changes according to the sensor conditions when the test button is hit
     fun result(tempList: List<Int>, tempVal: Double, humVal: Float){
         var humResult = 0
         var tempResult = 0
