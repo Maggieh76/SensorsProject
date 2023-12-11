@@ -9,5 +9,5 @@
         <item>Pre-ferments</item>
         <item>Other</item>
     </string-array>
-    <string name="help1">"Correct Temperature Ranges: \n Sourdough   80–85 \n Lean Dough   75–80</string>
+    <string name="help1">"Target Temperature Ranges:\n\n Sourdough                  70–85\n Rye Dough                  80–85\n Sweet Dough              75–80\n Lean Dough                75–78\n Pre–ferments            70–72\n Other Types of Bread      81 \n\n Target Humidity is 60–80 %</string>
 </resources>
