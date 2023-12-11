@@ -118,6 +118,9 @@ class MainActivity : AppCompatActivity() {
                 humVal
             )
         }
+
+        //implemented a "help" button to show the user the target ranges in case they are struggling to find a good spot
+        //the help button displays a pop up widnow with a chart of all target temperatures
         findViewById<ImageButton>(R.id.helpButton).setOnClickListener {
             // inflate the layout of the popup window
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
